@@ -35,7 +35,7 @@ if __name__ == '__main__':
         {"path": clenerpath + "//3dFiles", "ext": ["fbx", "blend", "blend1", "hdr"]}
     ]
 
-    f = open("data.json", "w")
+    f = open("FileExtencionData.json", "w")
     f.write(json.dumps(ListOfDest))
     print(json.dumps(ListOfDest))
 
