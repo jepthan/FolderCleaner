@@ -1,11 +1,7 @@
 import os
 import shutil
 import re
-
-class filedestiny:
-    def __init__(self, path: str, extencions: list):
-        self.path = path
-        self.extencions = extencions
+import json
 
 
 def FolderSetup(clenerpath, ListOfDest):
@@ -19,7 +15,7 @@ def FolderSetup(clenerpath, ListOfDest):
 def extencionToString(extencions: list) -> str:
     exten = ""
     for ex in extencions:
-        exten = exten+"|" + ex
+        exten = exten + "|" + ex
     return exten
 
 
@@ -28,31 +24,30 @@ if __name__ == '__main__':
     clenerpath = "C://Users//jefte//Documents//File_Clener"
     files = os.listdir(path)
     ListOfDest = [
-        filedestiny(clenerpath + "//Documents", ["docx", "doc", "pdf", "xlsx", "ppt", "txt"]),
-        filedestiny(clenerpath + "//Images", ["jpg", "svg", "gif", "png", "webm"]),
-        filedestiny(clenerpath + "//folders", []),
-        filedestiny(clenerpath + "//compressed files", ["zip", "rar","gz"]),
-        filedestiny(clenerpath + "//installers", ["msi", "tar", "jar"]),
-        filedestiny(clenerpath + "//videos", ["mp4", "mkv"]),
-        filedestiny(clenerpath + "//apps", ["exe"]),
-        filedestiny(clenerpath + "//code", ["json", "sql", "js", "xml", "csv", "log"]),
-        filedestiny(clenerpath + "//3dFiles", ["fbx", "blend", "blend1", "hdr"])
+        {"path": clenerpath + "//Documents", "ext": ["docx", "doc", "pdf", "xlsx", "ppt", "txt"]},
+        {"path": clenerpath + "//Images", "ext": ["jpg", "svg", "gif", "png", "webm"]},
+        {"path": clenerpath + "//folders", "ext": []},
+        {"path": clenerpath + "//compressed files", "ext": ["zip", "rar", "gz"]},
+        {"path": clenerpath + "//installers", "ext": ["msi", "tar", "jar"]},
+        {"path": clenerpath + "//videos", "ext": ["mp4", "mkv"]},
+        {"path": clenerpath + "//apps", "ext": ["exe"]},
+        {"path": clenerpath + "//code", "ext": ["json", "sql", "js", "xml", "csv", "log"]},
+        {"path": clenerpath + "//3dFiles", "ext": ["fbx", "blend", "blend1", "hdr"]}
     ]
 
-    FolderSetup(clenerpath, ListOfDest)
+    f = open("data.json", "w")
+    f.write(json.dumps(ListOfDest))
+    print(json.dumps(ListOfDest))
 
-    for dest in ListOfDest:
+    # FolderSetup(clenerpath, ListOfDest)
 
-
-        for file in files:
-            if re.search("^.*\.("+extencionToString(dest.extencions)+")$", file):
-                print(dest.path +"----------------"+ file)
-                print(path +"//"+ file)
-                shutil.move(path+"//"+file, dest.path)
-            if (extencionToString(dest.extencions) == ""):
-                if os.path.isdir(path+"//"+file):
-                    print(file)
-                    shutil.move(path+"//"+file, dest.path)
-
-
-
+    # for dest in ListOfDest:
+    #     for file in files:
+    #         if re.search("^.*\.("+extencionToString(dest.extencions)+")$", file):
+    #             print(dest.path +"----------------"+ file)
+    #             print(path +"//"+ file)
+    #             shutil.move(path+"//"+file, dest.path)
+    #         if (extencionToString(dest.extencions) == ""):
+    #             if os.path.isdir(path+"//"+file):
+    #                 print(file)
+    #                 shutil.move(path+"//"+file, dest.path)
